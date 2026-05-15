@@ -1,0 +1,87 @@
+{
+  "name": "goland-go-formatter",
+  "displayName": "GoLand Go Formatter",
+  "description": "GoLand-inspired Go formatting without adding Go language-server diagnostics.",
+  "version": "0.1.0",
+  "publisher": "sagaryadaviitk",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sagaryadaviitk/goland-go-formatter.git"
+  },
+  "homepage": "https://github.com/sagaryadaviitk/goland-go-formatter",
+  "bugs": {
+    "url": "https://github.com/sagaryadaviitk/goland-go-formatter/issues"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "main": "./extension.js",
+  "activationEvents": [
+    "onLanguage:go"
+  ],
+  "categories": [
+    "Formatters",
+    "Programming Languages",
+    "Other"
+  ],
+  "keywords": [
+    "go",
+    "golang",
+    "gofmt",
+    "gofumpt",
+    "goimports",
+    "formatter",
+    "goland",
+    "jetbrains"
+  ],
+  "files": [
+    "extension.js",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "GoLand Go Formatter",
+      "properties": {
+        "golandGoFormatter.tool": {
+          "type": "string",
+          "default": "gofmt",
+          "enum": [
+            "gofmt",
+            "goimports",
+            "gofumpt"
+          ],
+          "description": "Go formatting tool to run through the GoLand Go Formatter extension."
+        },
+        "golandGoFormatter.extraArgs": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "description": "Extra command-line arguments passed to the selected formatter."
+        },
+        "golandGoFormatter.timeoutMs": {
+          "type": "number",
+          "default": 10000,
+          "minimum": 1000,
+          "description": "Maximum time to wait for the formatter command."
+        }
+      }
+    },
+    "configurationDefaults": {
+      "[go]": {
+        "editor.defaultFormatter": "sagaryadaviitk.goland-go-formatter",
+        "editor.formatOnSave": true
+      }
+    }
+  },
+  "scripts": {
+    "validate": "node -c extension.js && node -e \"const fs=require('fs'); JSON.parse(fs.readFileSync('package.json','utf8')); for (const file of ['README.md','CHANGELOG.md','LICENSE']) fs.accessSync(file); console.log('ok')\"",
+    "package": "npm run validate && npx @vscode/vsce package",
+    "vscode:prepublish": "npm run validate"
+  }
+}
