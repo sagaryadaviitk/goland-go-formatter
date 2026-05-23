@@ -35,13 +35,6 @@
     "goland",
     "jetbrains"
   ],
-  "files": [
-    "extension.js",
-    "README.md",
-    "CHANGELOG.md",
-    "LICENSE",
-    "package.json"
-  ],
   "contributes": {
     "configuration": {
       "title": "GoLand Go Formatter",
@@ -80,8 +73,23 @@
     }
   },
   "scripts": {
-    "validate": "node -c extension.js && node -e \"const fs=require('fs'); JSON.parse(fs.readFileSync('package.json','utf8')); for (const file of ['README.md','CHANGELOG.md','LICENSE']) fs.accessSync(file); console.log('ok')\"",
+    "validate": "node scripts/validate.js",
     "package": "npm run validate && npx @vscode/vsce package",
     "vscode:prepublish": "npm run validate"
+  },
+  "icon": "resources/icon.png",
+  "galleryBanner": {
+    "color": "#262B31",
+    "theme": "dark"
+  },
+  "extensionKind": [
+    "workspace"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false,
+      "description": "GoLand Go Formatter runs local formatter commands against workspace files."
+    },
+    "virtualWorkspaces": false
   }
 }
